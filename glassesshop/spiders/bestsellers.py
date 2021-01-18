@@ -17,5 +17,11 @@ class BestsellersSpider(scrapy.Spider):
                 'product image link' :glass.xpath(".//img[@class = 'lazy d-block w-100 product-img-default']/@data-src").get()
                 
             }
+        # to scrape multiple pages
+        next_page = response.xpath("//a[@class = 'page-link' and @rel ='next']/@href").get()
+
+        #check if the next page exist or not?
+        if next_page:
+            yield scrapy.Request(url = next_page, callback=self.parse)
 
 
